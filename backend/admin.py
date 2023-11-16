@@ -1,20 +1,32 @@
 from django.contrib import admin
+from django.http import HttpResponse
+import csv
+from .models import Contact
 
-# Register your models here.
-from django.contrib import admin
-from .models import Blog, Category, Tag
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'subject', 'message')  # Modify according to your actual model fields
+    list_filter = ('subject',)  # Add a filter for the 'subject' field
+    search_fields = ('name', 'email', 'subject', 'message')  # Add search functionality
+    actions = ['export_csv']
 
-@admin.register(Blog)
-class BlogAdmin(admin.ModelAdmin):
-    list_display = ('title', 'publication_date')
-    list_filter = ('categories', 'tags')
-    prepopulated_fields = {'title': ('title',)}
+    def export_csv(self, request, queryset):
+        # Create a response object with CSV content type
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="contacts.csv"'
 
-@admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-    pass
+        # Create a CSV writer using the response object
+        writer = csv.writer(response)
 
-@admin.register(Tag)
-class TagAdmin(admin.ModelAdmin):
-    pass
+        # Write the header row
+        writer.writerow(['Name', 'Email', 'Subject', 'Message'])
 
+        # Write the data rows
+        for contact in queryset:
+            writer.writerow([contact.name, contact.email, contact.subject, contact.message])
+
+        return response
+
+    export_csv.short_description = "Export selected contacts to CSV"
+
+# Register the Contact model with the modified ContactAdmin
+admin.site.register(Contact, ContactAdmin)
