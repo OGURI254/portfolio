@@ -95,24 +95,20 @@
 
                         <h3 data-aos="fade-up">Social Info</h3>
                         <ul class="social-links d-flex align-center" data-aos="zoom-in">
-                            <li><a class="shadow-box" href="#"><i class="iconoir-dribbble"></i></a></li>
-                            <li><a class="shadow-box" href="#"><i class="iconoir-twitter"></i></a></li>
-                            <li><a class="shadow-box" href="#"><i class="iconoir-instagram"></i></a></li>
+                            <li><a class="shadow-box" href="https://www.linkedin.com/in/joseph-oguri-134b98236/"><i class="iconoir-linkedin"></i></i></a></li>
+                            <li><a class="shadow-box" href="https://twitter.com/JosephOguri"><i class="iconoir-twitter"></i></a></li>
+                            <li><a class="shadow-box" href="https://www.vstech.co.ke/users/team/joseph-oguri/"><i class="iconoir-dribbble"></i></a></li>
                         </ul>
                     </div>
 
-                    <div data-aos="zoom-in" class="contact-form">
+                    <div class="contact-form">
                         <div class="shadow-box">
                             <img src="/static/assets/images/bg1.png" alt="BG" class="bg-img">
                             <img src="/static/assets/images/icon3.png" alt="Icon">
                             <h1>Let’s work <span>together.</span></h1>
                             
-                            <form method="POST" action="{% url 'contact' %}" onsubmit="return onSubmit()">
+                            <form method="POST">
                                 {% csrf_token %}
-                                {{ form.as_p }}
-                                <div class="alert alert-success messenger-box-contact__msg" style="display: none" role="alert">
-                                    Your message was sent successfully.
-                                </div>
                                 <div class="input-group">
                                     <input type="text" name="full-name" id="full-name" placeholder="Name *">
                                 </div>
@@ -126,25 +122,9 @@
                                     <textarea name="message" id="message" placeholder="Your Message *"></textarea>
                                 </div>
                                 <div class="input-group">
-                                    <button class="theme-btn submit-btn" name="submit" type="submit">Send Message</button>
+                                    <button class="submit-btn" type="submit">Send Message</button>
                                 </div>
                             </form>
-                            
-                            <script>
-                                function onSubmit() {
-                                    // Perform any additional actions you need before the form is submitted
-                            
-                                    // Add a short delay to allow the success message to be displayed
-                                    setTimeout(function () {
-                                        // Reload the page after a short delay (e.g., 1000 milliseconds or 1 second)
-                                        location.reload();
-                                    }, 1000);
-                            
-                                    // Prevent the default form submission
-                                    return false;
-                                }
-                            </script>
-                            
                         </div>
                     </div>
                     
